@@ -3,7 +3,7 @@ import second from "./assets/HOM/5.jpg";
 import third from "./assets/HOM/vase.jpg";
 import fourth from "./assets/HOM/2.jpg";
 import styles from "./MostSaledItems.module.css"; 
-
+import { addItemToCart } from "./services/api.js";
 function MostSaledItem() {
   const items = [
     { src: PIC, name: "MIRRORS", price: "Rs. 1500" },
@@ -19,7 +19,8 @@ function MostSaledItem() {
     { src: PIC, name: "MIRRORS", price: "Rs. 1500" },
     { src: second, name: "CANDLES", price: "Rs. 800" },
   ];
-
+     
+ 
   return (
     <section id="gallery" className={styles.section}>
       <div className="container py-5">
@@ -31,7 +32,13 @@ function MostSaledItem() {
                 <img src={item.src} alt={item.name} className={styles.image} />
                 <p className={styles.name}>{item.name}</p>
                 <p className={styles.price}>{item.price}</p>
-                <button className={styles.button}>🛒 Add to Cart</button>
+                <button onClick={async () => {
+                 const data = await addItemToCart(item.name);
+                 console.log(data.message);
+                  }}>
+                 🛒 Add to Cart
+                 </button>
+
               </div>
             </div>
           ))}

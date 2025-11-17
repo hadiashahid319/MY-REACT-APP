@@ -16,7 +16,8 @@ function Login() {
   try {
     console.log("Sending data to backend:", data);
 
-    const response = await viewuser(data);
+   const response = await viewuser(data);
+
 
   } catch (error) {
     console.error("Error sending data:", error);
