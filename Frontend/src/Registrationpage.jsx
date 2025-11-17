@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./RegistrationPage.module.css";
 import bgImage from "./assets/HOM/login.jpg";
-
+import { registerUser } from "./services/api.js";
 function Registrationpage() {
   // State for form inputs
   const [firstName, setFirstName] = useState("");
@@ -15,29 +15,32 @@ function Registrationpage() {
   const [agree, setAgree] = useState(false);
 
   // Handle submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    if (!firstName || !lastName || !email || !password) {
-      alert("Please fill all required fields!");
-      return;
-    }
-    if (!agree) {
-      alert("Please agree to the Terms & Conditions!");
-      return;
-    }
 
-    console.log("✅ Registration Data:");
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Address 1:", address1);
-    console.log("Address 2:", address2);
-    console.log("City:", city);
-    console.log("Province:", province);
-    console.log("Agreed to Terms:", agree);
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!firstName || !lastName || !email || !password) {
+    alert("Please fill all required fields!");
+    return;
+  }
+
+  if (!agree) {
+    alert("Please agree to the Terms & Conditions!");
+    return;
+  }
+
+  const data = { firstName, lastName, email, password, address1, address2, city, province, agree };
+
+  try {
+    const response = await registerUser(data);
+    console.log("Response from backend:", response.data);
+    alert(response.data);
+  } catch (error) {
+    console.error("Error sending data:", error);
+  }
+};
+
 
   return (
     <div

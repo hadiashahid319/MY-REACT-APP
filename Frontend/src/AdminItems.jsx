@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styles from "./AdminItems.module.css";
+import { addItem} from "./services/api.js";
 // 🔹 Candles imports
 import candle1 from "./assets/Hom/candles/candle1.jpg";
 import candle2 from "./assets/Hom/candles/candle2.jpg";
@@ -104,33 +105,31 @@ const itemSchema = z.object({
   category: z.string().min(1, "Select category"),
   image: z.string().min(1, "Select image"),
 });
-
 export default function AdminItems() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("adminItems")) || []);
+  // 🔹 Static array of items (initial)
+  const [items, setItems] = useState([
+    { id: 1, name: "Candle 1", price: 500, description: "Beautiful candle", category: "candles", image: candle1 },
+    { id: 2, name: "Candle 2", price: 600, description: "Decor candle", category: "candles", image: candle2 },
+  ]);
+
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const { register, handleSubmit, reset, control, formState: { errors } } = useForm({
     resolver: zodResolver(itemSchema),
   });
 
-  const onSubmit = (data) => {
-    const newItem = {
-      id: Date.now(),
-      ...data,
-      price: Number(data.price),
-    };
-    const updatedItems = [newItem, ...items];
-    setItems(updatedItems);
-    localStorage.setItem("adminItems", JSON.stringify(updatedItems));
-    reset();
-    setSelectedCategory("");
-  };
 
-  const deleteItem = (id) => {
-    const updatedItems = items.filter(item => item.id !== id);
-    setItems(updatedItems);
-    localStorage.setItem("adminItems", JSON.stringify(updatedItems));
-  };
+const onSubmit = async (data) => {
+  console.log("Submitting item:", data); // Before sending
+try {
+  const response = await addItem(data);
+  console.log("Backend response:", response.data);
+} catch (error) {
+  console.log("Full error:", error.response || error.message);
+}
+
+};
+
 
   return (
     <div className={styles.adminpage}>
@@ -175,24 +174,8 @@ export default function AdminItems() {
         </form>
       </div>
 
-      {/* Items List */}
-      <div className={styles.listCard}>
-        <h4 className={styles.subtitle}>📦 Items List ({items.length})</h4>
-        {items.length === 0 ? (
-          <p className={styles.emptyText}>No items added yet.</p>
-        ) : (
-          items.map(item => (
-            <div key={item.id} className={styles.listItem}>
-              <img src={item.image} alt={item.name} className={styles.listThumb} />
-              <div className={styles.itemDetails}>
-                <strong>{item.name}</strong> — Rs {item.price}
-                <p>{item.description}</p>
-              </div>
-              <button className={styles.deleteBtn} onClick={() => deleteItem(item.id)}>🗑️ Delete</button>
-            </div>
-          ))
-        )}
-      </div>
+     
+       
     </div>
   );
 }

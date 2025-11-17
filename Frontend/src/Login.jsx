@@ -2,37 +2,39 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import sideImage from "./assets/HOM/login.jpg";
 import logo from "./assets/HOM/logo.png";
+import { viewuser } from "./services/api.js";
 
 function Login() {
-  // 🔹 State variables for email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // 🔹 Form submit handler
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      alert("Please fill in both fields!");
-      return;
-    }
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+  const data = { email, password };
+
+  try {
+    console.log("Sending data to backend:", data);
+
+    const response = await viewuser(data);
+
+  } catch (error) {
+    console.error("Error sending data:", error);
+  }
+};
+
 
   return (
     <div className={styles.mainContainer}>
       <div className={`${styles.loginBox} shadow-lg rounded-3 d-flex`}>
-        {/* LEFT SIDE (form) */}
         <div className={styles.formSection}>
           <div className="text-center mb-3">
             <img src={logo} alt="logo" className={styles.logo} />
           </div>
 
-          <h2 className="fw-bold text-center" style={{color:"black"}}>COZY CORNER</h2>
+          <h2 className="fw-bold text-center" style={{ color: "black" }}>COZY CORNER</h2>
           <h5 className={styles.subHeading}>WELCOME BACK</h5>
 
-          {/* 🔹 Form starts here */}
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
             <input
@@ -68,7 +70,6 @@ function Login() {
           </p>
         </div>
 
-        {/* RIGHT SIDE (image grid) */}
         <div className={styles.imageSection}>
           <img src={sideImage} alt="side" className={styles.sideImage} />
         </div>
