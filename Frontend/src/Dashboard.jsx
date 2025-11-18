@@ -2,11 +2,14 @@ import { Link, Outlet } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import styles from "./Dashboard.module.css";
+import bgImage from "./assets/Hom/frames/frame5.jpg"; 
 
 export default function Dashboard() {
   return (
     // <h1>testing</h1>
-    <div className={styles.mainContainer}>
+    <div className={styles.mainContainer} 
+    // style={{ backgroundImage: `url(${bgImage})` }}
+    >
       <div className={styles.dashboardContainer}>
         {/* Sidebar */}
         <div className={styles.dashboardSidebar}>

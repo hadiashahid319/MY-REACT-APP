@@ -1,25 +1,23 @@
-/* ====== Full Page Background ====== */
 .mainContainer {
-  height: 100vh;
-  width: 100%;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  background: linear-gradient(135deg, #f6f2ed, #ebe3d7);
-  font-family: "Poppins", sans-serif;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* ====== Inner Dashboard Card ====== */
 .dashboardContainer {
   display: flex;
-  background-color: #fffefc;
-  width: 90%;
-  max-width: 1100px;
-  height: 80vh;
-  border-radius: 25px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* semi-transparent panel */
+  border-radius: 10px;
   overflow: hidden;
 }
+
 
 /* ====== Sidebar ====== */
 .dashboardSidebar {

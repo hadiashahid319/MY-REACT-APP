@@ -1,12 +1,15 @@
-export const addItem = (req, res) => {
-  const itemData = req.body;
+import Item from "../models/adminadditems.js";
 
-  console.log("Received item from frontend:", itemData);  // Print here
+// Add new item
+export const createItem = async (req, res) => {
+  try {
+    const { name, description, price, category, image } = req.body;
 
-  // Save to database (optional)
-  // const newItem = new ItemModel(itemData);
-  // await newItem.save();
+    const newItem = new Item({ name, description, price, category, image });
+    await newItem.save();
 
-  // res.json({ message: "Item received successfully", itemData });
+    res.status(201).json({ message: "Item added successfully!", item: newItem });
+  } catch (error) {
+    res.status(500).json({ message: "Error adding item", error: error.message });
+  }
 };
-

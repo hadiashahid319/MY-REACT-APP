@@ -1,8 +1,8 @@
 import express from "express";
-import { addItem } from "../controllers/addItemController.js";
+import { createItem } from "../controllers/addItemController.js";
 
 const router = express.Router();
 
-router.post("/", addItem);
+router.post("/add", createItem);
 
 export default router;

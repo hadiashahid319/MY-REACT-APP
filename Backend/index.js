@@ -23,20 +23,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // ⭐ ROUTES
 app.use("/login", userRoutes);
-app.post('/login',(req, res) => {
-  try {
-    const { email, password } = req.body;
+// app.post('/login',(req, res) => {
+//   try {
+//     const { email, password } = req.body;
 
-    console.log("📩 Login data received:");
-    console.log("Email:", email);
-    console.log("Password:", password);
+//     console.log("📩 Login data received:");
+//     console.log("Email:", email);
+//     console.log("Password:", password);
 
-    res.json({ message: "Login successful!" });
+//     res.json({ message: "Login successful!" });
 
-  } catch (error) {
-    console.error("Error:", error);
-  }
-})
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// })
 app.use("/register", register);
 app.post('/register',(req, res) => {
   try {
@@ -66,17 +66,17 @@ app.post('/rating',(req, res) => {
 
   }
 })
-app.use("/admin", adminadd);
-app.post('/additem',(req, res) => {
-  const itemData = req.body;
+app.use("/api/items", adminadd);
+// app.post('/additem',(req, res) => {
+//   const itemData = req.body;
 
-  console.log("Received item from frontend:", itemData);})
+//   console.log("Received item from frontend:", itemData);})
 
   
-app.post("/clicked", (req, res) => {
-  console.log("Clicked data received:", req.body);
-  res.status(200).send({ message: "Received!" });
-});
+// app.post("/clicked", (req, res) => {
+//   console.log("Clicked data received:", req.body);
+//   res.status(200).send({ message: "Received!" });
+// });
 
 
 // POST /delete – behaves like /clicked
